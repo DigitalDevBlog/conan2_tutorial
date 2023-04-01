@@ -1,11 +1,12 @@
 from conan import ConanFile
 from conan.tools.cmake import CMakeToolchain, CMake, cmake_layout
 from conan.tools.files import get
+from conan.tools.scm import Git
 
 
 class helloRecipe(ConanFile):
     name = "hello2"
-    version = "1.0"
+    version = "1.1"
 
     # Optional metadata
     license = "<Put the package license here>"
@@ -22,8 +23,10 @@ class helloRecipe(ConanFile):
     def source(self):
         # Please, be aware that using the head of the branch instead of an immutable tag
         # or commit is not a good practice in general as the branch may change the contents
-        get(self, "https://github.com/conan-io/libhello/archive/refs/heads/main.zip",
-            strip_root=True)
+        #get(self, "https://github.com/conan-io/libhello/archive/refs/heads/main.zip",
+        #    strip_root=True)
+        git = Git(self)
+        git.clone(url="https://github.com/conan-io/libhello.git", target=".")
 
     def config_options(self):
         if self.settings.os == "Windows":
